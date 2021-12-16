@@ -34,10 +34,88 @@
 
 <body >
 	
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+
+      <div class="modal-header">
+          <h4 class="modal-title">Solicite su cotización</h4>
+        </div>
+
+        <div class="modal-body">
+        <div class="col-sm">
+                <div class="form-group">
+                <form id="formAlumno" >
+                  <input type="hidden" name="opc" id="opc" value="0">
+                  <input type="hidden" name="ID" id="ID" >
+
+                  <label>Cliente</label>
+                  <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Datos del cliente..." maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
+  >
+              </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="form-group">
+                                    <label>Teléfono</label>
+                  <input type="text" class="form-control" id="telefono" name="telefono" maxlength="10" pattern=""
+ placeholder="Teléfono"  >
+              </div>
+            </div>
+
+
+                      <div class="col-sm">
+                <div class="form-group">
+                  <label>Correo electrónico</label>
+                  <input type="text" class="form-control" id="email" name="email" maxlength="250" 
+ placeholder="Correo electrónico"  >
+              </div>
+            </div>
+
+
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Fecha</label>
+                  <input type="date" class="form-control" id="fecha" name="fecha"  >
+              </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Servicio</label>
+                  <textarea class="form-control" id="servicio" name="servicio"  placeholder="Describir el servicio..." rows="3"></textarea>
+              </div>
+            </div>
+
+
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <textarea class="form-control" id="direccion" name="direccion"  placeholder="Dirección..." rows="3"></textarea>
+              </div>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="modal-footer">
+        <span  class="btn btn-info" data-toggle="collapse" href="#collapseExample" id="saveAlumno">Guardar</span>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      </form>
+
+    </div>
+  </div>
+
+
+
+
 <section  style="margin_top: 2px; " >
-
-
-
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">INOFIS</a>
@@ -50,9 +128,8 @@
           <a class="nav-link active" aria-current="page" href="index2.php">Iniciar Sesión</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Cotizar</a>
+          <a class="nav-link" href="#" data-toggle="modal"  data-target="#myModal">Cotizar</a>
         </li>
-
       </ul>
     </div>
   </div>
@@ -60,7 +137,6 @@
 
 
 <div class="container "  style="margin_top: 0px; ">
-
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -72,7 +148,6 @@
     <li data-target="#myCarousel" data-slide-to="5"></li>
     <li data-target="#myCarousel" data-slide-to="6"></li>
   </ol>
-
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
     <div class="item active" align="center">
@@ -111,10 +186,6 @@
 </div>
 </div>
 
-
-
-
-
 </section>
 </body>
 </html>
@@ -123,15 +194,23 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
+    $('#saveAlumno').click(function(){
+          datos=$('#formAlumno').serialize();
+    
+            $.ajax({
+              type:"POST",
+              data:datos,
+              url:"controllers/cotizar/save.php",
+              success:function(data){
+                  window.location="index.php";
+                 }
+            }); 
 
-		$('#entrarSistema').click(function(){
-/*		vacios=validarFormVacio('frmLogin');
+        
+          });
 
-			if(vacios > 0){
-				alert("Debes llenar todos los campos!!");
-				return false;
-			}
-*/
+$('#entrarSistema').click(function(){
+
 	datos=$('#frmLoginx').serialize();
 
 		$.ajax({
@@ -146,8 +225,8 @@
 				}else{
 					alert("No se pudo acceder verifique sus datos de acceso :(");
 				}
-			}
-		});
+			    }
+		    });
 	   });
 
 

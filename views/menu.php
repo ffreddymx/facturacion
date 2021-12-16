@@ -7,7 +7,7 @@
                 <li class="nav-item"> <a class="nav-link" href="emisor.php">Emisor</a> </li>
                 <li class="nav-item"> <a class="nav-link" href="receptor.php">Receptores</a> </li>
                 <li class="nav-item"> <a class="nav-link" href="servicio.php">Servicios</a> </li>
-                <li class="nav-item"> <a class="nav-link" href="#">Facturas</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="cotizar.php">Solicitudes</a> </li>
                 <li class="nav-item"> <a class="nav-link" href="salir.php">Salir</a> </li>
             </ul>
             <div class="d-flex flex-column sim"> <span>Usuario</span> </div>
