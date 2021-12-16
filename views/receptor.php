@@ -24,9 +24,11 @@ require_once 'dependencias2.php';//parte del codigo html principal
         <div class="col-sm">
                 <div class="form-group">
                 <form id="formAlumno" >
-                  <input type="hidden" name="opc" id="opc" value="0">
+                <input type="hidden" name="opc" id="opc" value="0">
+                  <input type="hidden" name="ID" id="ID" >
+                  
                   <label>Nombre</label>
-                  <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre completo" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
+                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" maxlength="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
   >
               </div>
             </div>
@@ -34,7 +36,7 @@ require_once 'dependencias2.php';//parte del codigo html principal
             <div class="col-sm">
                 <div class="form-group">
                                     <label>RFC</label>
-                  <input type="text" class="form-control" id="password" name="password" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
+                  <input type="text" class="form-control" id="rfc" name="rfc" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
  placeholder="RFC"  >
               </div>
             </div>
@@ -43,7 +45,7 @@ require_once 'dependencias2.php';//parte del codigo html principal
                       <div class="col-sm">
                 <div class="form-group">
                   <label>Dirección</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" maxlength="250" 
+                  <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" 
  placeholder="Dirección"  >
               </div>
             </div>
@@ -52,14 +54,14 @@ require_once 'dependencias2.php';//parte del codigo html principal
               <div class="col-sm">
                 <div class="form-group">
                   <label>Teléfono</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Teléfono" maxlength="10" pattern="^[0-9]+"  >
+                  <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" maxlength="10" pattern="^[0-9]+"  >
               </div>
             </div>
 
             <div class="col-sm">
                 <div class="form-group">
                   <label>Email</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Email" maxlength="10" pattern=""  >
+                  <input type="text" class="form-control" id="email" name="email" placeholder="Email" maxlength="" pattern=""  >
               </div>
             </div>
 
@@ -82,10 +84,10 @@ require_once 'dependencias2.php';//parte del codigo html principal
   <div class="card card-body ">
   <form id="formXAlumno" >
 <div class="alert alert-danger" role="alert">
-  Confirme si desea eliminar al profesor ?
+  Confirme si desea eliminar el receptor ?
   <input type="hidden" name="IDx" id="IDx" class="form-control">
 </div>
-         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Alumno</span>
+         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Receptor</span>
          <a   data-toggle="collapse" href="#xAlumno" class="btn btn-success">Cancelar</a>
   </form>
   </div>
@@ -117,9 +119,9 @@ require_once 'dependencias2.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/profesor/save.php",
+              url:"../controllers/receptor/save.php",
               success:function(data){
-                  window.location="../views/profesor.php";
+                  window.location="../views/receptor.php";
                  }
             }); 
 
@@ -129,9 +131,9 @@ require_once 'dependencias2.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/profesor/update.php",
+              url:"../controllers/receptor/update.php",
               success:function(data){
-                  window.location="../views/profesor.php";
+                  window.location="../views/receptor.php";
                  }
             }); 
              }
@@ -142,20 +144,18 @@ require_once 'dependencias2.php';//parte del codigo html principal
 
                 var id  = $(this).data('id');
                 var nombre  = $('#'+id).children('td[data-target=Nombre]').text();
-                var apellido  = $('#'+id).children('td[data-target=Apellido]').text();
+                var rfc  = $('#'+id).children('td[data-target=RFC]').text();
                 var direccion  = $('#'+id).children('td[data-target=Direccion]').text();
-                var matricula  = $('#'+id).children('td[data-target=Matricula]').text();
-                var movil  = $('#'+id).children('td[data-target=Movil]').text();
-                var profesion  = $('#'+id).children('td[data-target=Profesion]').text();
+                var telefono  = $('#'+id).children('td[data-target=Telefono]').text();
+                var email  = $('#'+id).children('td[data-target=Email]').text();
                 var opc = 1;
 
                 $('#ID').val(id);
                 $('#nombre').val(nombre);
-                $('#apellido').val(apellido);
+                $('#rfc').val(rfc);
                 $('#direccion').val(direccion);                   
-                $('#matricula').val(matricula);
-                $('#movil').val(movil);
-                $('#profesion').val(profesion);
+                $('#telefono').val(telefono);
+                $('#email').val(email);
                 $('#opc').val(opc);
           });
 
@@ -172,9 +172,9 @@ require_once 'dependencias2.php';//parte del codigo html principal
               $.ajax({
                 type:"POST",
                 data:datos,
-                url:"../controllers/profesor/delete.php",
+                url:"../controllers/receptor/delete.php",
                 success:function(data){
-                    window.location="../views/profesor.php";
+                    window.location="../views/receptor.php";
                   }
               }); 
           });

@@ -25,6 +25,8 @@ require_once 'dependencias2.php';//parte del codigo html principal
                 <div class="form-group">
                 <form id="formAlumno" >
                   <input type="hidden" name="opc" id="opc" value="0">
+                  <input type="hidden" name="ID" id="ID" >
+
                   <label>Usuario</label>
                   <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
   >
@@ -52,7 +54,12 @@ require_once 'dependencias2.php';//parte del codigo html principal
               <div class="col-sm">
                 <div class="form-group">
                   <label>Tipo</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Numero Movil" maxlength="10" pattern="^[0-9]+"  >
+
+<select name="tipo" id="tipo">
+<option value="Admin">Admin</option>
+<option value="Usuario">Usuario</option>
+</select>
+
               </div>
             </div>
 
@@ -73,10 +80,10 @@ require_once 'dependencias2.php';//parte del codigo html principal
   <div class="card card-body ">
   <form id="formXAlumno" >
 <div class="alert alert-danger" role="alert">
-  Confirme si desea eliminar al profesor ?
+  Confirme si desea eliminar al Usuario ?
   <input type="hidden" name="IDx" id="IDx" class="form-control">
 </div>
-         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Alumno</span>
+         <span id="xAlumno" data-toggle="collapse"  class="btn btn-danger">Eliminar Usuario</span>
          <a   data-toggle="collapse" href="#xAlumno" class="btn btn-success">Cancelar</a>
   </form>
   </div>
@@ -108,7 +115,7 @@ require_once 'dependencias2.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/profesor/save.php",
+              url:"../controllers/usuario/save.php",
               success:function(data){
                   window.location="../views/usuario.php";
                  }
@@ -120,7 +127,7 @@ require_once 'dependencias2.php';//parte del codigo html principal
             $.ajax({
               type:"POST",
               data:datos,
-              url:"../controllers/profesor/update.php",
+              url:"../controllers/usuario/update.php",
               success:function(data){
                   window.location="../views/usuario.php";
                  }
@@ -132,22 +139,20 @@ require_once 'dependencias2.php';//parte del codigo html principal
           $(document).on('click','a[data-role=updateAlumno]',function(){
 
                 var id  = $(this).data('id');
+                var usuario  = $('#'+id).children('td[data-target=usuario]').text();
+                var password  = $('#'+id).children('td[data-target=password]').text();
                 var nombre  = $('#'+id).children('td[data-target=Nombre]').text();
-                var apellido  = $('#'+id).children('td[data-target=Apellido]').text();
-                var direccion  = $('#'+id).children('td[data-target=Direccion]').text();
-                var matricula  = $('#'+id).children('td[data-target=Matricula]').text();
-                var movil  = $('#'+id).children('td[data-target=Movil]').text();
-                var profesion  = $('#'+id).children('td[data-target=Profesion]').text();
+                var tipo  = $('#'+id).children('td[data-target=Tipo]').text();
                 var opc = 1;
 
                 $('#ID').val(id);
-                $('#nombre').val(nombre);
-                $('#apellido').val(apellido);
-                $('#direccion').val(direccion);                   
-                $('#matricula').val(matricula);
-                $('#movil').val(movil);
-                $('#profesion').val(profesion);
+                $('#usuario').val(usuario);
+                $('#password').val(password);
+                $('#nombre').val(nombre);                   
                 $('#opc').val(opc);
+
+                $('#tipo > option[value="'+tipo+'"]').attr('selected', 'selected');
+
           });
 
 
@@ -163,7 +168,7 @@ require_once 'dependencias2.php';//parte del codigo html principal
               $.ajax({
                 type:"POST",
                 data:datos,
-                url:"../controllers/profesor/delete.php",
+                url:"../controllers/usuario/delete.php",
                 success:function(data){
                     window.location="../views/usuario.php";
                   }

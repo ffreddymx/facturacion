@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2021 a las 00:06:09
+-- Tiempo de generación: 16-12-2021 a las 02:20:02
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.2.29
 
@@ -86,25 +86,56 @@ CREATE TABLE `receptor` (
 --
 
 INSERT INTO `receptor` (`id`, `Nombre`, `RFC`, `Direccion`, `Telefono`, `Email`) VALUES
-(1, 'INIVERSIDAD JUAREZ AUTONOMA DE TABASCO', 'UJA5801014N3', 'Centro, Tabasco', '931231231', 'ujat@ujat.mx');
+(1, 'INIVERSIDAD JUAREZ AUTONOMA DE TABASCO', 'UJA5801014N3', 'Centro, Tabasco', '931231231', 'ujat@ujat.mx'),
+(3, 'UNIVERSIDAD TECNOLOGICA DE LA SIERRA', 'TECSI2021', 'Teapa, Tabasco', '9999999999', 'tec@itss.mx');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `servicio`
+-- Estructura de tabla para la tabla `servicios`
 --
 
-CREATE TABLE `servicio` (
+CREATE TABLE `servicios` (
   `id` int(11) NOT NULL,
   `Descripcion` varchar(500) NOT NULL,
   `VUnitario` float NOT NULL,
   `Cantidad` int(11) NOT NULL,
   `IVA` float NOT NULL,
-  `Tipo` varchar(20) NOT NULL,
+  `Tipo` varchar(100) NOT NULL,
   `Base` float NOT NULL,
   `Tasa` float NOT NULL,
-  `idemisor` int(11) NOT NULL
+  `idreceptor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `servicios`
+--
+
+INSERT INTO `servicios` (`id`, `Descripcion`, `VUnitario`, `Cantidad`, `IVA`, `Tipo`, `Base`, `Tasa`, `idreceptor`) VALUES
+(3, 'Mantenimiento de clima BTU, Año 2000 ', 1223, 2, 0.16, 'Mantenimiento general', 0.2, 0.1, 1),
+(8, 'WEER', 1000, 1, 0.16, 'Mantenimiento general', 0.16, 0.15, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo`
+--
+
+CREATE TABLE `tipo` (
+  `id` int(11) NOT NULL,
+  `Nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tipo`
+--
+
+INSERT INTO `tipo` (`id`, `Nombre`) VALUES
+(1, 'Reparación de clima'),
+(2, 'Mantenimiento general'),
+(3, 'Instalación de climas'),
+(4, 'Climas industriales'),
+(5, 'Reparación de electrodoméstico');
 
 -- --------------------------------------------------------
 
@@ -125,7 +156,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `usuario`, `password`, `Nombre`, `Tipo`) VALUES
-(1, 'admin', 'admin', 'Super Administrador', 'Admin');
+(3, 'admin', 'admin', 'Soy Super Usuario', 'Admin');
 
 --
 -- Índices para tablas volcadas
@@ -153,11 +184,16 @@ ALTER TABLE `receptor`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `servicio`
+-- Indices de la tabla `servicios`
 --
-ALTER TABLE `servicio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idemisor` (`idemisor`);
+ALTER TABLE `servicios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `usuario`
@@ -185,19 +221,25 @@ ALTER TABLE `factura`
 -- AUTO_INCREMENT de la tabla `receptor`
 --
 ALTER TABLE `receptor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `servicio`
+-- AUTO_INCREMENT de la tabla `servicios`
 --
-ALTER TABLE `servicio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `servicios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -210,12 +252,6 @@ ALTER TABLE `factura`
   ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idservicio`) REFERENCES `servicio` (`id`),
   ADD CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`iduser`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `factura_ibfk_3` FOREIGN KEY (`idreceptor`) REFERENCES `receptor` (`id`);
-
---
--- Filtros para la tabla `servicio`
---
-ALTER TABLE `servicio`
-  ADD CONSTRAINT `servicio_ibfk_1` FOREIGN KEY (`idemisor`) REFERENCES `emisor` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

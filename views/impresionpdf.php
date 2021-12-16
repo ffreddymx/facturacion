@@ -1,7 +1,9 @@
 <?php
-//error_reporting(0);
 require_once '../db/db.php';
-require('../librerias/pdf/fpdf.php');
+require_once('../pdf/fpdf.php');
+include_once "../models/servicio_model.php";
+
+$conexion = Conectar::conexion();
 
 class PDF extends FPDF
 {
@@ -119,19 +121,26 @@ function NbLines($w,$txt)
 function Header()
 {
 
-$this->Image('../statics/logo.jpg',7,4,40,30);
+//$this->Image('../../statics/logo.jpg',7,4,40,25);
 //$this->Image('img/logo' ,240,5,25,20);
-$turno = $_GET['turno'];
 
-    $this->SetFont('Arial','B',12);
-    $this->SetXY(70,16);
-    $this->Cell(10,6,utf8_decode("COLEGIO DE BACHILLERES DE TABASCO"),0,1,'L');
-    $this->SetFont('Arial','',9);
-    $this->SetXY(90,20);
-    $this->Cell(0,6,utf8_decode("Lista de Alumnos del Turno ".$turno),0,1,'L');
-    $this->SetFont('Arial','',9);
-    $this->SetXY(70,23);
-    $this->Cell(0,6,utf8_decode("PLANTEL NO. 11"),0,1,'L');
+$this->SetFont('Arial','B',18);
+$this->SetXY(10,16);
+$this->Cell(10,6,utf8_decode("INOFIS"),0,1,'L');
+$this->SetFont('Arial','',10);
+$this->SetXY(10,21);
+$this->Cell(0,6,utf8_decode("Servicio de Mantenimiento de Aire Acondicionado"),0,1,'L');
+$this->SetXY(10,25);
+$this->Cell(0,6,utf8_decode("Hugo Fuentes Aguilar Gutierrez"),0,1,'L');
+$this->SetXY(10,29);
+$this->Cell(0,6,utf8_decode("FUGH6507136L7"),0,1,'L');
+
+$this->SetFont('Arial','',9);
+$this->SetXY(10,33);
+$this->Cell(0,6,utf8_decode("Lista de Servicios"),0,1,'L');
+
+
+
 
 }
 
@@ -161,66 +170,31 @@ function Footer()
 
 }
 
-    $pdf=new PDF('P','mm','Letter'); //P es verical y L horizontal
+    $pdf=new PDF('L','mm','Letter'); //P es verical y L horizontal
     $pdf->Open();
     $pdf->AddPage();
     $pdf->SetMargins(10,10,10);
 
-    $conexion = Conectar::conexion();
+    $id = (isset($_GET['val'])) ? $_GET['val'] : '';
 
-    $turno = $_GET['turno'];
-
-
-
-    if((!empty($_GET['grado']) || !empty($_GET['grupo']) || !empty($_GET['ciclo']))  ){ //check if form was submitted
-
-        $grado = (isset($_GET['grado'])) ? $_GET['grado'] : '';
-        $grupo = (isset($_GET['grupo'])) ? $_GET['grupo'] : '';
-        $ciclo = (isset($_GET['ciclo'])) ? $_GET['ciclo'] : '';
-
-            if(!empty($_GET['grado']) && !empty($_GET['grupo']) && !empty($_GET['ciclo'])) { 
-
-            $alumno=$conexion->query("SELECT CONCAT(Nombre,' ',Apellido) AS Alumno,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-            FROM `inscrito` as I 
-            INNER JOIN alumnos as A on I.idalumno = A.id
-            INNER JOIN grupo as G on I.idgrupo = G.id
-            INNER JOIN grado as GG on GG.idgrupo = G.id
-            WHERE G.Turno = '$turno' and G.Grupo = '$grupo' and Grado='$grado' and G.Ciclo = '$ciclo' ");
-            }
-            else { 
-            $alumno=$conexion->query("SELECT CONCAT(Nombre,' ',Apellido) AS Alumno,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-            FROM `inscrito` as I 
-            INNER JOIN alumnos as A on I.idalumno = A.id
-            INNER JOIN grupo as G on I.idgrupo = G.id
-            INNER JOIN grado as GG on GG.idgrupo = G.id
-            WHERE G.Turno = '$turno' and (G.Grupo = '$grupo' or Grado='$grado' or G.Ciclo = '$ciclo') ");
-            }
-
-      }  
-      else { 
-        $alumno=$conexion->query("SELECT CONCAT(Nombre,' ',Apellido) AS Alumno,Matricula, GG.grado as Grado,G.Grupo,G.Turno, G.Ciclo	
-       FROM `inscrito` as I 
-       INNER JOIN alumnos as A on I.idalumno = A.id
-       INNER JOIN grupo as G on I.idgrupo = G.id
-       INNER JOIN grado as GG on GG.idgrupo = G.id
-       WHERE G.Turno = '$turno' ");
-      }
+    $alumn=$conexion->query("SELECT S.id, R.id as IDR, R.Nombre as Receptor, S.Descripcion, S.VUnitario as Costo, S.Cantidad,S.IVA,S.Tipo, S.Base,S.Tasa
+    FROM servicios as S inner join receptor as R on R.id = S.idreceptor");
 
 
-    $pdf->Ln(10);
+     $pdf->Ln(1);
 
-     $pdf->SetWidths(array(30,80,20,20,20,20));
+     $pdf->SetWidths(array(70,70,20,20,20,40 ,20));
      $pdf->SetFont('Arial','B',9,'L');
      $pdf->SetFillColor(1,113,185);//color blanco rgb
      $pdf->SetTextColor(255);
      $pdf->SetLineWidth(.3);
     for($i=0;$i<1;$i++)
             {
-                $pdf->Row(array(utf8_decode('Matricula'),utf8_decode('Alumno'),'Grado','Grupo','Turno','Ciclo'),'L');
+                $pdf->Row(array(('Receptor'),utf8_decode('Descripción'),'Costo',('Cantidad'),'IVA','Tipo','Base'),'L');
             }
 
     //***************-------------------------encabezados de las tablas
-    $pdf->SetWidths(array(30,80,20,20,20,20));
+    $pdf->SetWidths(array(70,70,20,20,20,40,20));
     $pdf->SetFont('Arial','',10,'L');
   //  $pdf->SetFillColor(224,235,255);
     $pdf->SetFillColor(255,255,255);//color blanco rgb
@@ -228,8 +202,8 @@ function Footer()
 
     $pdf->SetFont('Arial','',8);
 
-        foreach( $alumno as $alumnos ){
-        $pdf->Row(array($alumnos['Matricula'], utf8_decode($alumnos['Alumno']),$alumnos['Grado'],$alumnos['Grupo'],$alumnos['Turno'],$alumnos['Ciclo']),'L');
+        foreach( $alumn as $alumno ){
+        $pdf->Row(array($alumno['Receptor'],utf8_decode($alumno['Descripcion']),$alumno['Costo'],$alumno['Cantidad'],$alumno['IVA'],$alumno['Tipo'],$alumno['Base']),'L');
         }
 
 
