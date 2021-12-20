@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 20-12-2021 a las 13:18:55
--- Versión del servidor: 8.0.27-0ubuntu0.20.04.1
--- Versión de PHP: 7.4.3
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 20-12-2021 a las 15:01:53
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.2.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cotizar` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `cliente` varchar(50) NOT NULL,
   `telefono` varchar(10) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `cotizar` (
   `servicio` varchar(500) NOT NULL,
   `direccion` varchar(500) NOT NULL,
   `costo` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cotizar`
@@ -52,7 +52,7 @@ INSERT INTO `cotizar` (`id`, `cliente`, `telefono`, `email`, `fecha`, `servicio`
 --
 
 CREATE TABLE `emisor` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `Nombre` varchar(100) NOT NULL,
   `RFC` varchar(50) NOT NULL,
   `Direccion` varchar(250) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE `emisor` (
   `CSD` varchar(50) NOT NULL,
   `CP` varchar(10) NOT NULL,
   `Regimen` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `emisor`
@@ -78,25 +78,27 @@ INSERT INTO `emisor` (`id`, `Nombre`, `RFC`, `Direccion`, `Email`, `Telefono`, `
 --
 
 CREATE TABLE `factura` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `folio` varchar(20) NOT NULL,
-  `Subtotal` float DEFAULT NULL,
-  `IVA` float DEFAULT NULL,
+  `idreceptor` int(11) NOT NULL,
+  `idservicio` int(11) NOT NULL,
+  `Subtotal` float NOT NULL,
+  `IVA` float NOT NULL,
   `Moneda` varchar(20) NOT NULL,
   `FormaPago` varchar(20) NOT NULL,
   `MetodoPago` varchar(30) NOT NULL,
-  `iduser` int DEFAULT NULL,
-  `Fecha` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `iduser` int(11) NOT NULL,
+  `Fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `factura`
 --
 
-INSERT INTO `factura` (`id`, `folio`, `Subtotal`, `IVA`, `Moneda`, `FormaPago`, `MetodoPago`, `iduser`, `Fecha`) VALUES
-(9, 'QWE12', 0, 0, 'Nacional', 'Contado', 'Contado', 0, '2021-12-19'),
-(11, 'ZZZAA', NULL, NULL, 'Nacional', 'Contado', 'Pagos en parcialidades', NULL, '2021-12-19'),
-(12, 'zczc', NULL, NULL, 'Nacional', 'Credito', 'Pagos diferidos', NULL, '2021-12-20');
+INSERT INTO `factura` (`id`, `folio`, `idreceptor`, `idservicio`, `Subtotal`, `IVA`, `Moneda`, `FormaPago`, `MetodoPago`, `iduser`, `Fecha`) VALUES
+(7, 'www', 0, 0, 0, 0, 'Nacional', 'Contado', 'Contado', 0, '0000-00-00'),
+(9, 'QWE12', 0, 0, 0, 0, 'Nacional', 'Contado', 'Contado', 0, '2021-12-19'),
+(10, '', 0, 0, 0, 0, '', '', '', 0, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -105,13 +107,13 @@ INSERT INTO `factura` (`id`, `folio`, `Subtotal`, `IVA`, `Moneda`, `FormaPago`, 
 --
 
 CREATE TABLE `receptor` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `Nombre` varchar(100) NOT NULL,
   `RFC` varchar(50) NOT NULL,
   `Direccion` varchar(250) NOT NULL,
   `Telefono` varchar(11) NOT NULL,
   `Email` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `receptor`
@@ -119,8 +121,7 @@ CREATE TABLE `receptor` (
 
 INSERT INTO `receptor` (`id`, `Nombre`, `RFC`, `Direccion`, `Telefono`, `Email`) VALUES
 (1, 'INIVERSIDAD JUAREZ AUTONOMA DE TABASCO', 'UJA5801014N3', 'Centro, Tabasco', '931231231', 'ujat@ujat.mx'),
-(3, 'UNIVERSIDAD TECNOLOGICA DE LA SIERRA', 'TECSI2021', 'Teapa, Tabasco', '9999999999', 'tec@itss.mx'),
-(4, 'Universidad Olmeca', '', '', '', '');
+(3, 'UNIVERSIDAD TECNOLOGICA DE LA SIERRA', 'TECSI2021', 'Teapa, Tabasco', '9999999999', 'tec@itss.mx');
 
 -- --------------------------------------------------------
 
@@ -129,28 +130,24 @@ INSERT INTO `receptor` (`id`, `Nombre`, `RFC`, `Direccion`, `Telefono`, `Email`)
 --
 
 CREATE TABLE `servicios` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `Descripcion` varchar(500) NOT NULL,
   `VUnitario` float NOT NULL,
-  `Cantidad` int NOT NULL,
+  `Cantidad` int(11) NOT NULL,
   `IVA` float NOT NULL,
   `Tipo` varchar(100) NOT NULL,
   `Base` float NOT NULL,
   `Tasa` float NOT NULL,
-  `idreceptor` int NOT NULL,
+  `idreceptor` int(11) NOT NULL,
   `Factura` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `servicios`
 --
 
 INSERT INTO `servicios` (`id`, `Descripcion`, `VUnitario`, `Cantidad`, `IVA`, `Tipo`, `Base`, `Tasa`, `idreceptor`, `Factura`) VALUES
-(3, 'Mantenimiento de clima BTU, Año 2000 ', 1223, 2, 0.16, 'Mantenimiento general', 0.2, 0.1, 1, 'QWE12'),
-(8, 'WEER', 1000, 1, 0.16, 'Mantenimiento general', 0.16, 0.15, 3, ''),
-(9, 'MANTENIMIENTO GENERAL PREVENTIVO Y CORRECTIVO DE CLIMA MINI-SPLIT 33600 BTU MARCA: LENNOX UBICACION:MASTER ROOM SERVID OR PLANTA BAJA INV. S/S2816D10190 REPARACION DE MOOR DE EVAPORADORA', 2000, 1, 0.16, 'Mantenimiento general', 2000, 0.16, 1, 'QWE12'),
-(11, 'xxx', 0, 0, 0, 'Reparación de clima', 0, 0, 3, ''),
-(12, 'qweq', 0, 0, 0, '', 0, 0, 0, '');
+(1, 'asdass', 0, 0, 0, 'Reparación de clima', 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -159,9 +156,9 @@ INSERT INTO `servicios` (`id`, `Descripcion`, `VUnitario`, `Cantidad`, `IVA`, `T
 --
 
 CREATE TABLE `tipo` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `Nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `tipo`
@@ -181,12 +178,12 @@ INSERT INTO `tipo` (`id`, `Nombre`) VALUES
 --
 
 CREATE TABLE `usuario` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `usuario` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   `Nombre` varchar(100) NOT NULL,
   `Tipo` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -249,43 +246,43 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cotizar`
 --
 ALTER TABLE `cotizar`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `emisor`
 --
 ALTER TABLE `emisor`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `receptor`
 --
 ALTER TABLE `receptor`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo`
 --
 ALTER TABLE `tipo`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
