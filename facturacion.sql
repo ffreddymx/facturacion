@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-12-2021 a las 02:20:02
+-- Tiempo de generación: 16-12-2021 a las 06:54:25
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.2.29
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `facturacion`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cotizar`
+--
+
+CREATE TABLE `cotizar` (
+  `id` int(11) NOT NULL,
+  `cliente` varchar(50) NOT NULL,
+  `telefono` varchar(10) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `fecha` date NOT NULL,
+  `servicio` varchar(500) NOT NULL,
+  `direccion` varchar(500) NOT NULL,
+  `costo` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cotizar`
+--
+
+INSERT INTO `cotizar` (`id`, `cliente`, `telefono`, `email`, `fecha`, `servicio`, `direccion`, `costo`) VALUES
+(1, 'CERACON SA DE CV', '9932324232', 'algo@google.com', '2021-12-15', 'LIMPIEZA DE TODOS LOS MINI-SPLIT MARCA CARRIER, JAPANDO Y LG', 'VILLAHERMOSA, TABASCO', 2000);
 
 -- --------------------------------------------------------
 
@@ -113,7 +137,8 @@ CREATE TABLE `servicios` (
 
 INSERT INTO `servicios` (`id`, `Descripcion`, `VUnitario`, `Cantidad`, `IVA`, `Tipo`, `Base`, `Tasa`, `idreceptor`) VALUES
 (3, 'Mantenimiento de clima BTU, Año 2000 ', 1223, 2, 0.16, 'Mantenimiento general', 0.2, 0.1, 1),
-(8, 'WEER', 1000, 1, 0.16, 'Mantenimiento general', 0.16, 0.15, 3);
+(8, 'WEER', 1000, 1, 0.16, 'Mantenimiento general', 0.16, 0.15, 3),
+(9, 'MANTENIMIENTO GENERAL PREVENTIVO Y CORRECTIVO DE CLIMA MINI-SPLIT 33600 BTU MARCA: LENNOX UBICACION:MASTER ROOM SERVID OR PLANTA BAJA INV. S/S2816D10190 REPARACION DE MOOR DE EVAPORADORA', 2000, 1, 0.16, 'Mantenimiento general', 2000, 0.16, 1);
 
 -- --------------------------------------------------------
 
@@ -163,6 +188,12 @@ INSERT INTO `usuario` (`id`, `usuario`, `password`, `Nombre`, `Tipo`) VALUES
 --
 
 --
+-- Indices de la tabla `cotizar`
+--
+ALTER TABLE `cotizar`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `emisor`
 --
 ALTER TABLE `emisor`
@@ -206,6 +237,12 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `cotizar`
+--
+ALTER TABLE `cotizar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `emisor`
 --
 ALTER TABLE `emisor`
@@ -227,7 +264,7 @@ ALTER TABLE `receptor`
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo`

@@ -18,6 +18,15 @@ class Servicio_model{
     }
 
 
+    public function get_servicioid($id){
+        $consulta=$this->db->query("SELECT * from servicios where Factura = '$id' ");
+        while($filas=$consulta->fetch()){
+            $this->usuario[]=$filas;
+        }
+        return $this->usuario;
+    }
+
+
     public function consultar2(){
         $consulta=$this->db->query("SELECT S.id, R.id as IDR, R.Nombre as Receptor, S.Descripcion, S.VUnitario, S.Cantidad,S.IVA,S.Tipo, S.Base,S.Tasa
         FROM servicios as S inner join receptor as R on R.id = S.idreceptor");

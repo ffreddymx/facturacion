@@ -1,7 +1,7 @@
 <?php
 require_once '../db/db.php';
 require_once('../pdf/fpdf.php');
-include_once "../models/servicio_model.php";
+include_once "../models/cotizar_model.php";
 
 $conexion = Conectar::conexion();
 
@@ -124,6 +124,18 @@ function Header()
 //$this->Image('../../statics/logo.jpg',7,4,40,25);
 //$this->Image('img/logo' ,240,5,25,20);
 
+$id = (isset($_GET['num'])) ? $_GET['num'] : '';
+
+$tipo=new Cotizar_model();
+$tipo = $tipo->get_cotizarid($id);
+
+foreach($tipo as $coti){
+    $cliente = $coti['cliente'];
+    $direccion = $coti['direccion'];
+    $telefono = $coti['telefono'];
+    $costo = $coti['costo'];
+}
+
 $this->SetFont('Arial','B',18);
 $this->SetXY(10,16);
 $this->Cell(10,6,utf8_decode("INOFIS"),0,1,'L');
@@ -135,10 +147,22 @@ $this->Cell(0,6,utf8_decode("Hugo Fuentes Aguilar Gutierrez"),0,1,'L');
 $this->SetXY(10,29);
 $this->Cell(0,6,utf8_decode("FUGH6507136L7"),0,1,'L');
 
-$this->SetFont('Arial','',9);
-$this->SetXY(10,33);
-$this->Cell(0,6,utf8_decode("Lista de Servicios"),0,1,'L');
+$this->SetXY(170,25);
+$this->SetFont('Arial','B',18);
+$this->Cell(0,6,utf8_decode("COTIZACIÓN"),0,1,'L');
 
+
+
+$this->SetFont('Arial','B',14);
+$this->SetXY(10,36);
+$this->Cell(10,6,utf8_decode("Cliente"),0,1,'L');
+$this->SetFont('Arial','',10);
+$this->SetXY(10,40);
+$this->Cell(0,6,utf8_decode($cliente),0,1,'L');
+$this->SetXY(10,44);
+$this->Cell(0,6,utf8_decode($direccion),0,1,'L');
+$this->SetXY(10,48);
+$this->Cell(0,6,utf8_decode($telefono),0,1,'L');
 
 
 
@@ -149,9 +173,24 @@ $this->Cell(0,6,utf8_decode("Lista de Servicios"),0,1,'L');
 function Footer()
 {
 
+    $id = (isset($_GET['num'])) ? $_GET['num'] : '';
+
+$tipo=new Cotizar_model();
+$tipo = $tipo->get_cotizarid($id);
+
+foreach($tipo as $coti){
+
+    $costo = $coti['costo'];
+}
 
 
-
+    $this->SetFont('Arial','',12);
+    $this->SetXY(170,150);
+    $this->Cell(0,6,utf8_decode("Subtotal : $".number_format($costo,2) ),0,1,'L');
+    $this->SetXY(170,156);
+    $this->Cell(0,6,utf8_decode("IVA         :    16%"),0,1,'L');
+    $this->SetXY(170,161);
+    $this->Cell(0,6,utf8_decode("Total      : $".number_format(($costo*0.16) + $costo,2)  ),0,1,'L');
 
    $this->SetY(-25);
   $this->SetFont('Arial','',9);
@@ -170,41 +209,40 @@ function Footer()
 
 }
 
-    $pdf=new PDF('L','mm','Letter'); //P es verical y L horizontal
+    $pdf=new PDF('P','mm','Letter'); //P es verical y L horizontal
     $pdf->Open();
     $pdf->AddPage();
     $pdf->SetMargins(10,10,10);
 
-    $id = (isset($_GET['val'])) ? $_GET['val'] : '';
-
-    $alumn=$conexion->query("SELECT S.id, R.id as IDR, R.Nombre as Receptor, S.Descripcion, S.VUnitario as Costo, S.Cantidad,S.IVA,S.Tipo, S.Base,S.Tasa
-    FROM servicios as S inner join receptor as R on R.id = S.idreceptor 
-    where S.Factura != '' ");
+    $id = (isset($_GET['num'])) ? $_GET['num'] : '';
 
 
-     $pdf->Ln(1);
+    $alumn=$conexion->query("SELECT * from cotizar where id = '$id'");
 
-     $pdf->SetWidths(array(70,70,20,20,20,40 ,20));
+
+     $pdf->Ln(3);
+
+     $pdf->SetWidths(array(180,20));
      $pdf->SetFont('Arial','B',9,'L');
      $pdf->SetFillColor(1,113,185);//color blanco rgb
      $pdf->SetTextColor(255);
      $pdf->SetLineWidth(.3);
     for($i=0;$i<1;$i++)
             {
-                $pdf->Row(array(('Receptor'),utf8_decode('Descripción'),'Costo',('Cantidad'),'IVA','Tipo','Base'),'L');
+                $pdf->Row(array(utf8_decode('Servicio'),'Costo'),'L');
             }
 
     //***************-------------------------encabezados de las tablas
-    $pdf->SetWidths(array(70,70,20,20,20,40,20));
+    $pdf->SetWidths(array(180,20));
     $pdf->SetFont('Arial','',10,'L');
-  //  $pdf->SetFillColor(224,235,255);
+   $pdf->SetFillColor(224,235,255);
     $pdf->SetFillColor(255,255,255);//color blanco rgb
     $pdf->SetTextColor(0);
 
     $pdf->SetFont('Arial','',8);
 
         foreach( $alumn as $alumno ){
-        $pdf->Row(array($alumno['Receptor'],utf8_decode($alumno['Descripcion']),$alumno['Costo'],$alumno['Cantidad'],$alumno['IVA'],$alumno['Tipo'],$alumno['Base']),'L');
+        $pdf->Row(array(utf8_decode($alumno['servicio']),$alumno['costo']),'L');
         }
 
 

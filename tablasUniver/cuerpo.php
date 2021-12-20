@@ -146,8 +146,11 @@ public function usuario($a,$link)
               }
               if($link!=0){
                 ?>
+               
+
                             <td style='width:30px;'><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="modal" data-target="#myModal" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></i></a></td>     
                             <td style="width:30px;"><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumnox" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
+
            <?php       
                  } 
               echo '</tr>';
@@ -170,7 +173,7 @@ public function usuario($a,$link)
                 echo'<th>' . ($key) . '</th>';
                 $this->target[] = $key;
              }
-             echo "<th colspan='2' style='width:50px;' >Acciones</th>";
+             echo "<th colspan='3' style='width:50px;' align='center' >Acciones</th>";
              echo '</tr></thead><tbody border="1">';
 
               foreach ( $this->alumnos as $r ) {
@@ -184,6 +187,7 @@ public function usuario($a,$link)
                 ?>
                             <td style='width:30px;'><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="modal" data-target="#myModal" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></i></a></td>     
                             <td style="width:30px;"><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumnox" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
+                            <td style="width:30px;"><a class="btn btn-dark btn-sm"  href="cotizarpdf.php?num=<?php echo $r['id'];?>" ><i class="fas fa-print"></i></a></td>        
            <?php       
                  } 
               echo '</tr>';
@@ -192,6 +196,43 @@ public function usuario($a,$link)
   }
 
 
+    //==============================================================facturas
+    public function factura($a,$link)
+    {           
+      $consulta = $this->db->query($a);
+      while($filas = $consulta->fetch(PDO::FETCH_ASSOC) ){
+        $this->alumnos[] = $filas;
+      }
+      echo "<table class='table table-sm table-hover'><thead class='thead-dark'><tr> ";//iniciamos la tabla
+            
+        foreach($this->alumnos[0] as $key=>$value){
+                  echo'<th>' . ($key) . '</th>';
+                  $this->target[] = $key;
+               }
+               echo "<th colspan='3' style='width:50px;' >Acciones</th>";
+               echo '</tr></thead><tbody border="1">';
+  
+                foreach ( $this->alumnos as $r ) {
+                 echo '<tr id='.$r["id"].'>';
+                 $i = 0;
+                    foreach ( $r as $v ) {
+                    echo '<td data-target="'.$this->target[$i].'">'.$v.'</td>';
+                    $i++;
+                }
+                if($link!=0){
+                  ?>
+                 
+  
+                              <td style='width:30px;'><a class="btn btn-info btn-sm" aria-controls="collapseExample" data-toggle="modal" data-target="#myModal" data-role="updateAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-edit"></i></a></td>     
+                              <td style="width:30px;"><a class="btn btn-danger btn-sm" aria-controls="xAlumno" data-toggle="collapse" href="#xAlumnox" data-role="xAlumno" data-id="<?php echo $r['id']; ?>"><i class="fas fa-trash-alt"></i></a></td>        
+                              <td style="width:30px;"><a class="btn btn-dark btn-sm"  href="facturapdf.php?num=<?php echo $r['Factura'];?>" ><i class="fas fa-print"></i></a></td>        
+  
+             <?php       
+                   } 
+                echo '</tr>';
+                }
+        echo '</tbody> </table>';
+    }
 
 
 

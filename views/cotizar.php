@@ -26,7 +26,7 @@ $servi = $servi->get_receptor();
       <div class="modal-content">
 
       <div class="modal-header">
-          <h4 class="modal-title">Solicite su cotización</h4>
+          <h4 class="modal-title">Costo de la Cotización</h4>
         </div>
 
         <div class="modal-body">

@@ -18,6 +18,16 @@ class Receptor_model{
     }
 
 
+    public function get_receptorid($id){
+        $consulta=$this->db->query("SELECT * from receptor where id = '$id' ");
+        while($filas=$consulta->fetch()){
+            $this->usuario[]=$filas;
+        }
+        return $this->usuario;
+    }
+
+
+
     public function saveReceptor($datos){
 
         $this->db->exec("INSERT INTO receptor(Nombre,RFC,Direccion,Telefono,Email) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]')");

@@ -16,10 +16,9 @@ $servi = $servi->get_receptor();
 ?>
 
 
-<p class="lead" style="margin-top: 0px" >Servicios</p> <hr class="my-1" >
+<p class="lead" style="margin-top: 0px" >Lista de Facturas</p> <hr class="my-1" >
 <div  align="left" style="margin-bottom: 5px; margin-top: 0px;">
-<a role="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Registrar Servicio</a>
-<a role="button" class="btn btn-danger" data-toggle="modal" data-target="#facturacion">Facturar los Servicios</a>
+<a role="button" class="btn btn-warning" href="impresionpdf.php" >Imprimir</a>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -249,9 +248,9 @@ $servi = $servi->get_receptor();
 
             <?php
             $table = new tablacuerpo();
-             $table->servicio("SELECT S.id, R.id as IDR, S.Factura,R.Nombre as Receptor, S.Descripcion, S.VUnitario, S.Cantidad,S.IVA,S.Tipo, S.Base,S.Tasa
+             $table->factura("SELECT S.id, R.id as IDR, S.Factura,R.Nombre as Receptor, S.Descripcion, S.VUnitario, S.Cantidad,S.IVA,S.Tipo, S.Base,S.Tasa
               FROM servicios as S inner join receptor as R on R.id = S.idreceptor
-              where S.Factura = ''",1);
+              where S.Factura != '' ",1);
              ?>
 
  <?php include 'footer.php'; ?>

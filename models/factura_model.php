@@ -1,6 +1,6 @@
 <?php
 
-class Cotizar_model{
+class Factura_model{
     private $db;
     private $usuario;
  
@@ -18,8 +18,8 @@ class Cotizar_model{
     }
   
 
-    public function get_cotizarid($id){
-        $consulta=$this->db->query("SELECT * from cotizar where id = '$id' ");
+    public function get_factura($id){
+        $consulta=$this->db->query("SELECT * from factura where folio = '$id' ");
         while($filas=$consulta->fetch()){
             $this->usuario[]=$filas;
         }
@@ -28,9 +28,12 @@ class Cotizar_model{
 
 
 
-    public function saveCotizar($datos){
+    public function saveFactura($datos){
+        //$_POST['factura'],$_POST['modena'],$_POST['pago'],$_POST['metodo'])
+        //folio 	idreceptor 	idservicio 	Subtotal 	IVA 	Moneda 	FormaPago 	MetodoPago 	iduser 	
+        $this->db->exec("INSERT INTO factura(folio,Moneda,FormaPago,MetodoPago,Fecha) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]')");
+        $this->db->exec("UPDATE servicios set Factura='$datos[0]' where Factura = ''  ");
 
-        $this->db->exec("INSERT INTO cotizar(cliente,telefono,email,fecha,servicio,direccion) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]','$datos[5]')");
     
     }
 
