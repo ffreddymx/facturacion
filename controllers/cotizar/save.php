@@ -5,7 +5,7 @@ require_once("../../models/cotizar_model.php"); //aqui estan todas las clases
 
 $per=new Cotizar_model();
 
-$datos=array($_POST['cliente'],$_POST['telefono'],$_POST['email'],$_POST['fecha'],$_POST['servicio'],$_POST['direccion']);
+$datos=array($_POST['cliente'],$_POST['telefono'],$_POST['movil'],$_POST['email'],$_POST['municipio'],$_POST['colonia'],$_POST['calle'],$_POST['numero'],$_POST['cp'],$_POST['servicio']);
 $per->saveCotizar($datos);
 return 1;
 

@@ -30,7 +30,7 @@ class Cotizar_model{
 
     public function saveCotizar($datos){
 
-        $this->db->exec("INSERT INTO cotizar(cliente,telefono,email,fecha,servicio,direccion) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]','$datos[5]')");
+        $this->db->exec("INSERT INTO cotizar(cliente,telefono,movil,email,municipio,colonia,calle,numero,cp,servicio) values('$datos[0]','$datos[1]','$datos[2]','$datos[3]','$datos[4]','$datos[5]','$datos[6]','$datos[7]','$datos[8]','$datos[9]')");
     
     }
 

@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once 'db/db.php';
+require_once 'models/tipo_model.php';
+
+$tipo=new tipo_model();
+$tipo = $tipo->get_tipo();
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,17 +63,26 @@
                   <input type="hidden" name="opc" id="opc" value="0">
                   <input type="hidden" name="ID" id="ID" >
 
-                  <label>Cliente</label>
-                  <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Datos del cliente..." maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Nombre completo" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
   >
               </div>
             </div>
 
             <div class="col-sm">
                 <div class="form-group">
-                                    <label>Teléfono</label>
+          <label>Teléfono de oficina</label>
                   <input type="text" class="form-control" id="telefono" name="telefono" maxlength="10" pattern=""
- placeholder="Teléfono"  >
+ placeholder="Teléfono de oficina"  >
+              </div>
+            </div>
+
+
+            <div class="col-sm">
+                <div class="form-group">
+          <label>Teléfono movil</label>
+                  <input type="text" class="form-control" id="movil" name="movil" maxlength="10" pattern=""
+ placeholder="Teléfono movil"  >
               </div>
             </div>
 
@@ -77,27 +98,61 @@
 
             <div class="col-sm">
                 <div class="form-group">
-                  <label>Fecha</label>
-                  <input type="date" class="form-control" id="fecha" name="fecha"  >
+                  <label>Municipio</label>
+                  <input class="form-control" id="municipio" name="municipio"  placeholder="Municipio..." rows="3">
               </div>
             </div>
+
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Colonia</label>
+                  <input class="form-control" id="colonia" name="colonia"  placeholder="Colonia..." rows="3">
+              </div>
+            </div>
+
+            
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Calle</label>
+                  <textarea class="form-control" id="calle" name="calle"  placeholder="Calle..." rows="2"></textarea>
+              </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Número</label>
+                  <input class="form-control" id="numero" name="numero"  placeholder="Número..." rows="3">
+              </div>
+            </div>
+
+
+
+
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>C.P</label>
+                  <input class="form-control" id="cp" name="cp"  placeholder="Código Postal..." rows="3">
+              </div>
+            </div>
+
 
             <div class="col-sm">
                 <div class="form-group">
                   <label>Servicio</label>
-                  <textarea class="form-control" id="servicio" name="servicio"  placeholder="Describir el servicio..." rows="3"></textarea>
-              </div>
+                  <div class="mb-3">
+                    <select class="form-select" name="servicio" id="servicio">
+                        <option selected disabled>Seleccione el servicio</option>
+                        <?php
+                        foreach($tipo as $tipos){ 
+                        echo "<option value='".$tipos['Nombre']."'>".$tipos['Nombre']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>              </div>
             </div>
 
 
-            <div class="col-sm">
-                <div class="form-group">
-                  <label>Dirección</label>
-                  <textarea class="form-control" id="direccion" name="direccion"  placeholder="Dirección..." rows="3"></textarea>
-              </div>
-            </div>
-
-
+ 
 
         </div>
 

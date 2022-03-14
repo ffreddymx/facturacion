@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-12-2021 a las 15:01:53
+-- Tiempo de generación: 14-03-2022 a las 05:45:25
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.2.29
 
@@ -35,15 +35,22 @@ CREATE TABLE `cotizar` (
   `fecha` date NOT NULL,
   `servicio` varchar(500) NOT NULL,
   `direccion` varchar(500) NOT NULL,
-  `costo` float NOT NULL
+  `costo` float NOT NULL,
+  `movil` varchar(10) NOT NULL,
+  `municipio` varchar(50) NOT NULL,
+  `colonia` varchar(50) NOT NULL,
+  `calle` varchar(250) NOT NULL,
+  `numero` int(5) NOT NULL,
+  `cp` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cotizar`
 --
 
-INSERT INTO `cotizar` (`id`, `cliente`, `telefono`, `email`, `fecha`, `servicio`, `direccion`, `costo`) VALUES
-(1, 'CERACON SA DE CV', '9932324232', 'algo@google.com', '2021-12-15', 'LIMPIEZA DE TODOS LOS MINI-SPLIT MARCA CARRIER, JAPANDO Y LG. MANO DE OBRA EN LAS INSTALACIONES DE NUEVOS EQUIPOS EN PLANTA ALTA', 'VILLAHERMOSA, TABASCO', 2000);
+INSERT INTO `cotizar` (`id`, `cliente`, `telefono`, `email`, `fecha`, `servicio`, `direccion`, `costo`, `movil`, `municipio`, `colonia`, `calle`, `numero`, `cp`) VALUES
+(1, 'CERACON SA DE CV', '9932324232', 'algo@google.com', '2021-12-15', 'LIMPIEZA DE TODOS LOS MINI-SPLIT MARCA CARRIER, JAPANDO Y LG. MANO DE OBRA EN LAS INSTALACIONES DE NUEVOS EQUIPOS EN PLANTA ALTA', 'VILLAHERMOSA, TABASCO', 2000, '9932324232', 'Tacotalpa', 'Centro', 'Sebastian Lerod de tejada', 13, 86870),
+(2, 'Carlos Rafael Gutierrez Sanchez', '9931245356', 'rafamarquez@google.com', '0000-00-00', 'Instalacion básica mini split 1 y 1.5 t', '', 1000, '9994324678', 'Cardenas', 'Centro', 'Calixto merino', 2, 86890);
 
 -- --------------------------------------------------------
 
@@ -169,7 +176,14 @@ INSERT INTO `tipo` (`id`, `Nombre`) VALUES
 (2, 'Mantenimiento general'),
 (3, 'Instalación de climas'),
 (4, 'Climas industriales'),
-(5, 'Reparación de electrodoméstico');
+(5, 'Reparación de electrodoméstico'),
+(6, 'Mantenimiento preventivo mayor'),
+(7, 'Instalacion básica mini split 1 y 1.5 t'),
+(8, 'Instalacion básica mini split 2 y 3 t'),
+(9, 'Cambio de armaflex'),
+(10, 'Cambio de compresor rotativo'),
+(11, 'Cambio o adaptación de tarjeta universal'),
+(12, 'Remplazo de sensores');
 
 -- --------------------------------------------------------
 
@@ -246,7 +260,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cotizar`
 --
 ALTER TABLE `cotizar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `emisor`
@@ -276,7 +290,7 @@ ALTER TABLE `servicios`
 -- AUTO_INCREMENT de la tabla `tipo`
 --
 ALTER TABLE `tipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

@@ -134,6 +134,11 @@ foreach($tipo as $coti){
     $direccion = $coti['direccion'];
     $telefono = $coti['telefono'];
     $costo = $coti['costo'];
+    $municipio = $coti['municipio'];
+    $colonia = $coti['colonia'];
+    $calle = $coti['calle'];
+    $numero = $coti['numero'];
+    $cp = $coti['cp'];
 }
 
 $this->SetFont('Arial','B',18);
@@ -155,13 +160,21 @@ $this->Cell(0,6,utf8_decode("COTIZACIÓN"),0,1,'L');
 
 $this->SetFont('Arial','B',14);
 $this->SetXY(10,36);
-$this->Cell(10,6,utf8_decode("Cliente"),0,1,'L');
+$this->Cell(10,6,utf8_decode("Datos del destinatario"),0,1,'L');
 $this->SetFont('Arial','',10);
 $this->SetXY(10,40);
-$this->Cell(0,6,utf8_decode($cliente),0,1,'L');
+$this->Cell(0,6,"Nombre: ".utf8_decode($cliente),0,1,'L');
 $this->SetXY(10,44);
-$this->Cell(0,6,utf8_decode($direccion),0,1,'L');
+$this->Cell(0,6,"Municipio: ".utf8_decode($municipio),0,1,'L');
 $this->SetXY(10,48);
+$this->Cell(0,6,"Colonia: ".utf8_decode($colonia),0,1,'L');
+$this->SetXY(10,52);
+$this->Cell(0,6,"Calle: ".utf8_decode($calle),0,1,'L');
+$this->SetXY(10,56);
+$this->Cell(0,6,"Numero: ".utf8_decode($numero),0,1,'L');
+$this->SetXY(10,60);
+$this->Cell(0,6,"Codigo postal: ".utf8_decode($cp),0,1,'L');
+$this->SetXY(10,64);
 $this->Cell(0,6,utf8_decode($telefono),0,1,'L');
 
 
