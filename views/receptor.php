@@ -21,52 +21,37 @@ require_once 'dependencias2.php';//parte del codigo html principal
         </div>
 
         <div class="modal-body">
-        <div class="col-sm">
                 <div class="form-group">
                 <form id="formAlumno" >
                 <input type="hidden" name="opc" id="opc" value="0">
                   <input type="hidden" name="ID" id="ID" >
                   
-                  <label>Nombre</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" maxlength="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
-  >
-              </div>
-            </div>
+                  <label for="nombre">Nombre Empresa/Dueño</label>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre completo" maxlength="50" required  >
+                  </div>
 
-            <div class="col-sm">
-                <div class="form-group">
-                                    <label>RFC</label>
-                  <input type="text" class="form-control" id="rfc" name="rfc" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
- placeholder="RFC"  >
-              </div>
-            </div>
+                  <label>RFC</label>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="rfc" name="rfc" maxlength="30"  placeholder="RFC"  >
+                  </div>
 
-
-                      <div class="col-sm">
-                <div class="form-group">
                   <label>Dirección</label>
-                  <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" 
- placeholder="Dirección"  >
-              </div>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" placeholder="Dirección"  >
+                  </div>
+
+                  <label for="telefono">Teléfono</label>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" maxlength="10" required   >
+                  </div>
+
+                  <label for="email">Email</label>
+                  <div class="col-sm">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email" required  >
+                  </div>
+                  </div>
             </div>
-
-
-              <div class="col-sm">
-                <div class="form-group">
-                  <label>Teléfono</label>
-                  <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" maxlength="10" pattern="^[0-9]+"  >
-              </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Email" maxlength="" pattern=""  >
-              </div>
-            </div>
-
-
-        </div>
 
 
         <div class="modal-footer">
@@ -105,13 +90,87 @@ require_once 'dependencias2.php';//parte del codigo html principal
  <?php include 'footer.php'; ?>
 
 
-
-
       <script>
       $(document).ready(function(){
 
-      
+    $('#formAlumno').validate({
+       rules: {
+          nombre: {
+             required: true,
+             minlength: 5
+          },
+          comments: {
+             required: true
+          },
+          telefono: {
+             required: true,
+             minlength: 10
+          },
+          password: {
+             required: true,
+             minlength: 5
+          },
+          confirm_password: {
+             required: true,
+             minlength: 5,
+             equalTo: "#password"
+          },
+          email: {
+             required: true,
+             email: true
+          },
+          agree: "required"
+       },
+       messages: {           
+        nombre: {
+             required: "Por favor ingresa tu nombre completo",
+             minlength: "Tu nombre debe ser de no menos de 5 caracteres"
+          },
+        telefono: {
+             required: "Por favor ingresa el número de teléfono completo",
+             minlength: "Tu teléfono debe ser de no menos de 10 números"
+          },
+        comments: "Por favor ingresa un comentario",
+          password: {
+             required: "Por favor ingresa una contraseña",
+             minlength: "Tu contraseña debe ser de no menos de 5 caracteres de longitud"
+          },
+          confirm_password: {
+             required: "Ingresa un password",
+             minlength: "Tu contraseña debe ser de no menos de 5 caracteres de longitud",
+             equalTo: "Por favor ingresa la misma contraseña de arriba"
+          },
+        email: "Por favor ingresa un correo válido",
+          agree: "Por favor acepta nuestra política",
+          luckynumber: {
+             required: "Por favor"
+          }
+       },
+       errorElement: "em",
+       errorPlacement: function (error, element) {
+          // Add the `help-block` class to the error element
+          error.addClass("help-block");
+ 
+          if (element.prop( "type" ) === "checkbox") {
+             error.insertAfter(element.parent("label") );
+          } else {
+             error.insertAfter(element);
+          }
+       },
+       highlight: function ( element, errorClass, validClass ) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-error" ).removeClass( "has-success" );
+       },
+       unhighlight: function (element, errorClass, validClass) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-success" ).removeClass( "has-error" );  
+       } 
+    });
+
+
+
+
        $('#saveAlumno').click(function(){
+        if($("#formAlumno").valid())
+    { 
           datos=$('#formAlumno').serialize();
          var opc  = document.getElementById("opc").value;
          if(opc == 0) { 
@@ -137,7 +196,14 @@ require_once 'dependencias2.php';//parte del codigo html principal
                  }
             }); 
              }
+            
+            }
           });
+        
+
+
+
+
 
 
           $(document).on('click','a[data-role=updateAlumno]',function(){

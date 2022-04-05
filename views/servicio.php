@@ -41,9 +41,9 @@ $servi = $servi->get_receptor();
                
                   
 
-                  <div class="col-sm">
-                <div class="form-group">
+                  
                   <label>Cliente</label>
+                  <div class="col-sm">
                   <div class="mb-3">
                     <select class="form-select" name="cli" id="cli">
                         <option selected disabled>Seleccione al cliente</option>
@@ -53,44 +53,32 @@ $servi = $servi->get_receptor();
                         }
                         ?>
                     </select>
-                </div>              </div>
+                </div>              
             </div>
 
 
-                  <label>Descripción</label>
+                  <label>Descripción</label>                  
+                  <div class="col-sm">
                   <textarea class="form-control" id="descripcion" name="descripcion"  placeholder="Describir el servicio..." rows="3"></textarea>
+                      </div>
+           
+                  <label for="costo">Costo</label>
+                  <div class="col-sm">
+                  <input type="number" class="form-control" id="costo" name="costo"  placeholder="Costo" required >
+                  </div>
 
-              </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="form-group">
-                                    <label>Costo</label>
-                  <input type="text" class="form-control" id="costo" name="costo" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
- placeholder="Costo"  >
-              </div>
-            </div>
-
-
-                      <div class="col-sm">
-                <div class="form-group">
                   <label>Cantidad</label>
-                  <input type="text" class="form-control" id="cantidad" name="cantidad" maxlength="250" 
- placeholder="Cantidad"  >
-              </div>
-            </div>
+                  <div class="col-sm">
+                  <input type="number" class="form-control" id="cantidad" name="cantidad" maxlength="250" placeholder="Cantidad"  >
+                  </div>
 
-
-              <div class="col-sm">
-                <div class="form-group">
                   <label>IVA</label>
-                  <input type="text" class="form-control" id="iva" name="iva" placeholder="IVA" maxlength="10" pattern="^[0-9]+"  >
-              </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="form-group">
+                  <div class="col-sm">
+                  <input type="number" class="form-control" id="iva" name="iva" placeholder="IVA" maxlength="10" pattern="^[0-9]+"  >
+                  </div>
+ 
                   <label>Tipo</label>
+                  <div class="col-sm">
                   <div class="mb-3">
                     <select class="form-select" name="tipo" id="tipo">
                         <option selected disabled>Seleccione el tipo</option>
@@ -100,24 +88,21 @@ $servi = $servi->get_receptor();
                         }
                         ?>
                     </select>
-                </div>              </div>
-            </div>
-
-
-            <div class="col-sm">
-                <div class="form-group">
-                  <label>Base</label>
+                    </div>     </div>       
+                
+                        <label>Base</label>
+                        <div class="col-sm">
                   <input type="text" class="form-control" id="base" name="base" placeholder="Base" maxlength="" pattern=""  >
-              </div>
-            </div>
+                  </div>
 
-            <div class="col-sm">
-                <div class="form-group">
                   <label>Tasa</label>
+                  <div class="col-sm">
                   <input type="text" class="form-control" id="tasa" name="tasa" placeholder="Tasa" maxlength="" pattern=""  >
-              </div>
-            </div>
+                  </div>
 
+                  </div>
+                  </div>
+   
         </div>
 
         <div class="modal-footer">
@@ -150,19 +135,17 @@ $servi = $servi->get_receptor();
                 <input type="hidden" name="opc" id="opc" value="0">
                   <input type="hidden" name="ID" id="ID" >
                
-              </div>
-            </div>
+
 
             <div class="col-sm">
-                <div class="form-group">
-                                    <label>Factura</label>
-                  <input type="text" class="form-control" id="factura" name="factura" maxlength="30" pattern=""
- placeholder="Factura"  >
-              </div>
+          <label>Factura</label>
+                  <input type="text" class="form-control" id="factura" name="factura" maxlength="30" placeholder="Factura"  >
             </div>
 
+
+
+
             <div class="col-sm">
-                <div class="form-group">
                   <label>Moneda</label>
                   <div class="mb-3">
                     <select class="form-select" name="moneda" id="moneda">
@@ -170,12 +153,15 @@ $servi = $servi->get_receptor();
                         <option value="Nacional">Nacional</option>
                         <option value="Extrangera">Extrangera</option>
                     </select>
-                </div>              </div>
+                </div>             
             </div>
 
 
+   
+
+
+
            <div class="col-sm">
-                <div class="form-group">
                   <label>Forma de pago</label>
                   <div class="mb-3">
                     <select class="form-select" name="pago" id="pago">
@@ -184,11 +170,10 @@ $servi = $servi->get_receptor();
                         <option value="Credito">Credito</option>
                         <option value="Credito">Por definir</option>
                     </select>
-                </div>              </div>
+                </div>             
             </div>
 
             <div class="col-sm">
-                <div class="form-group">
                   <label>Método de pago</label>
                   <div class="mb-3">
                     <select class="form-select" name="metodo" id="metodo">
@@ -196,22 +181,22 @@ $servi = $servi->get_receptor();
                         <option value="Pagos en parcialidades">Pagos en parcialidades</option>
                         <option value="Pagos diferidos">Pagos diferidos</option>
                     </select>
-                </div>              </div>
+                </div>             
             </div>
+
+
+
 
             <div class="col-sm">
-                <div class="form-group">
                                     <label>Fecha</label>
                   <input type="date" class="form-control" id="fecha" name="fecha"  >
-              </div>
             </div>
-
-
 
 
         </div>
 
-
+        </div>
+            </div>
 
 
 
@@ -262,8 +247,172 @@ $servi = $servi->get_receptor();
       <script>
       $(document).ready(function(){
 
-      
+       
+        $('#formAlumno').validate({
+       rules: {
+        factura: {
+             required: true
+          },
+          cli: {
+             required: true
+          },
+          tipo: {
+             required: true
+          },
+          descripcion: {
+             required: true,
+             minlength: 10
+          },
+          costo: {
+             required: true,
+             number: true
+          },
+          cantidad: {
+             required: true,
+             number: true
+          },
+          iva: {
+             required: true,
+             number: true
+          },
+          email: {
+             required: true,
+             email: true
+          },
+          agree: "required"
+       },
+       messages: {           
+        factura: {
+             required: "Este campo no puede quedar vacio",
+          },
+        cli: {
+             required: "Por favor debe seleccionar un cliente",
+          },
+          tipo: {
+             required: "Por favor debe seleccionar un tipo",
+          },
+          costo: {
+             required: "Por favor ingresa el costo del servicio",
+             number: "Debe ingresar un número valido"
+          },
+          cantidad: {
+             required: "Por favor ingresa la cantidad del servicios",
+             number: "Debe ingresar un número valido"
+          },
+          iva: {
+             required: "Por favor ingresa el costo del servicio",
+             number: "Debe ingresar un número valido"
+          },
+          descripcion: "Por favor ingresa un descripción breve ",
+          password: {
+             required: "Por favor ingresa una contraseña",
+             minlength: "Tu contraseña debe ser de no menos de 5 caracteres de longitud"
+          },
+          confirm_password: {
+             required: "Ingresa un password",
+             minlength: "Tu contraseña debe ser de no menos de 5 caracteres de longitud",
+             equalTo: "Por favor ingresa la misma contraseña de arriba"
+          },
+        email: "Por favor ingresa un correo válido",
+          agree: "Por favor acepta nuestra política",
+          luckynumber: {
+             required: "Por favor"
+          }
+       },
+       errorElement: "em",
+       errorPlacement: function (error, element) {
+          // Add the `help-block` class to the error element
+          error.addClass("help-block");
+ 
+          if (element.prop( "type" ) === "checkbox") {
+             error.insertAfter(element.parent("label") );
+          } else {
+             error.insertAfter(element);
+          }
+       },
+       highlight: function ( element, errorClass, validClass ) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-error" ).removeClass( "has-success" );
+       },
+       unhighlight: function (element, errorClass, validClass) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-success" ).removeClass( "has-error" );  
+       } 
+    });
+
+
+    $('#formFactura').validate({
+       rules: {
+        factura: {
+             required: true
+          },
+          moneda: {
+             required: true
+          },
+          pago: {
+             required: true
+          },
+          metodo: {
+             required: true
+          },
+          fecha: {
+             required: true,
+             fecha:true
+          },
+          email: {
+             required: true,
+             email: true
+          },
+          agree: "required"
+       },
+       messages: {           
+        factura: {
+             required: "Este campo no puede quedar vacio",
+          },
+          moneda: {
+             required: "Por favor debe seleccionar tipo moneda",
+          },
+
+          pago: {
+             required: "Por favor debe seleccionar forma de pago",
+          },
+          metodo: {
+             required: "Por favor debe seleccionar método de pago",
+          },
+          fecha: {
+             required: "Por favor debe seleccionar una fecha",
+             fecha:"Elija un formato correcto"
+          },
+          descripcion: "Por favor ingresa un descripción breve ",
+
+        email: "Por favor ingresa un correo válido",
+          agree: "Por favor acepta nuestra política",
+          luckynumber: {
+             required: "Por favor"
+          }
+       },
+       errorElement: "em",
+       errorPlacement: function (error, element) {
+          // Add the `help-block` class to the error element
+          error.addClass("help-block");
+ 
+          if (element.prop( "type" ) === "checkbox") {
+             error.insertAfter(element.parent("label") );
+          } else {
+             error.insertAfter(element);
+          }
+       },
+       highlight: function ( element, errorClass, validClass ) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-error" ).removeClass( "has-success" );
+       },
+       unhighlight: function (element, errorClass, validClass) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-success" ).removeClass( "has-error" );  
+       } 
+    });
+
+
        $('#saveAlumno').click(function(){
+
+        if($("#formAlumno").valid())
+    { 
           datos=$('#formAlumno').serialize();
          var opc  = document.getElementById("opc").value;
          if(opc == 0) { 
@@ -287,11 +436,15 @@ $servi = $servi->get_receptor();
                  }
             }); 
              }
+        }
           });
 
 
 
           $('#saveFactura').click(function(){
+
+   if($("#formFactura").valid())
+    { 
           datos=$('#formFactura').serialize();
          var opc  = document.getElementById("opc").value;
          if(opc == 0) { 
@@ -314,7 +467,8 @@ $servi = $servi->get_receptor();
                   window.location="../views/servicio.php";
                  }
             }); 
-             }
+               }
+            }
           });
 
 

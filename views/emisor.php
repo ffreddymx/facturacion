@@ -21,79 +21,67 @@ require_once 'dependencias2.php';//parte del codigo html principal
         </div>
 
         <div class="modal-body">
-        <div class="col-sm">
                 <div class="form-group">
                 <form id="formAlumno" >
-                  <input type="hidden" name="opc" id="opc" value="0">
-                  <label>Nombre</label>
-                  <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
-  >
+                <input type="hidden" name="opc" id="opc" value="0">
+
+
+
+                  <label for="nombre">Nombre</label>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" maxlength="30" required>
+                  </div>
+
+         
+          <label>RFC</label>  
+          <div class="col-sm">
+          <input type="text" class="form-control" id="rfc" name="rfc" maxlength="15" placeholder="RFC"  >
+          </div>
+
+
+                      
+        <label>Direccion</label>
+        <div class="col-sm">
+        <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" placeholder="Direccion" maxlength="300"  >
+         </div>
+
+
+                  <label for="email">Email</label>  
+                  <div class="col-sm">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email"  >
               </div>
-            </div>
+   
 
-            <div class="col-sm">
-                <div class="form-group">
-                                    <label>RFC</label>
-                  <input type="text" class="form-control" id="rfc" name="rfc" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
- placeholder="RFC"  >
+                  <label for="telefono">Teléfono movil</label>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono movil" maxlength="10"  required >
               </div>
-            </div>
+     
 
-
-                      <div class="col-sm">
-                <div class="form-group">
-                  <label>Direccion</label>
-                  <input type="text" class="form-control" id="direccion" name="direccion" maxlength="250" placeholder="Direccion"  >
+                  <label>Folio Fiscal</label>
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="folio" name="folio" placeholder="Folio Fiscal" maxlength="20" >
               </div>
-            </div>
 
 
-              <div class="col-sm">
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Email" maxlength="10" pattern=""  >
-              </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="form-group">
-                  <label>Telefono</label>
-                  <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" maxlength="10" pattern="^[0-9]+"  >
-              </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="form-group">
-                  <label>FolioFiscal</label>
-                  <input type="text" class="form-control" id="folio" name="folio" placeholder="Folio Fiscal" maxlength="10" pattern=""  >
-              </div>
-            </div>
-
-            <div class="col-sm">
-                <div class="form-group">
                   <label>CSD</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="CSD" maxlength="10" pattern=""  >
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="csd" name="csd" placeholder="CSD" maxlength="20"  >
               </div>
-            </div>
 
-            <div class="col-sm">
-                <div class="form-group">
+
                   <label>CP</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Código postal" maxlength="10" pattern="^[0-9]+"  >
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="cp" name="cp" placeholder="Código postal" maxlength="5" required>
               </div>
-            </div>
 
-            <div class="col-sm">
-                <div class="form-group">
+
                   <label>Régimen</label>
-                  <input type="text" class="form-control" id="movil" name="movil" placeholder="Régimen" maxlength="10" pattern=""  >
-              </div>
-            </div>
-
-
-
+                  <div class="col-sm">
+                  <input type="text" class="form-control" id="regimen" name="regimen" placeholder="Régimen" maxlength="50"  >
+                  </div>
+           </div>
         </div>
-
 
         <div class="modal-footer">
         <span  class="btn btn-info" data-toggle="collapse" href="#collapseExample" id="saveAlumno">Guardar</span>
@@ -136,8 +124,75 @@ require_once 'dependencias2.php';//parte del codigo html principal
       <script>
       $(document).ready(function(){
 
-      
+      // =============================VALIDAR
+      $('#formAlumno').validate({
+       rules: {
+          nombre: {
+             required: true,
+             minlength: 5
+          },
+          cp: {
+             required: true,
+             minlength: 5
+          },
+          telefono: {
+             required: true,
+             minlength: 10
+          },
+          email: {
+             required: true,
+             email: true
+          },
+          agree: "required"
+       },
+       messages: {           
+        nombre: {
+             required: "Por favor ingresa tu nombre completo",
+             minlength: "Tu nombre debe ser de no menos de 5 caracteres"
+          },
+          cp: {
+             required: "Por favor ingresa tu cp valido",
+             minlength: "Tu cp debe ser de 5 números"
+          },
+        telefono: {
+             required: "Por favor ingresa el número de teléfono completo",
+             minlength: "Tu teléfono debe ser de no menos de 10 números"
+          },
+        email: "Por favor ingresa un correo válido",
+          agree: "Por favor acepta nuestra política",
+          luckynumber: {
+             required: "Por favor"
+          }
+       },
+       errorElement: "em",
+       errorPlacement: function (error, element) {
+          // Add the `help-block` class to the error element
+          error.addClass("help-block");
+ 
+          if (element.prop( "type" ) === "checkbox") {
+             error.insertAfter(element.parent("label") );
+          } else {
+             error.insertAfter(element);
+          }
+       },
+       highlight: function ( element, errorClass, validClass ) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-error" ).removeClass( "has-success" );
+       },
+       unhighlight: function (element, errorClass, validClass) {
+          $( element ).parents( ".col-sm-10" ).addClass( "has-success" ).removeClass( "has-error" );  
+       } 
+    });
+
+      //==============================
+
+
+
        $('#saveAlumno').click(function(){
+
+
+        if($("#formAlumno").valid())
+    { 
+
           datos=$('#formAlumno').serialize();
          var opc  = document.getElementById("opc").value;
          if(opc == 0) { 
@@ -163,7 +218,10 @@ require_once 'dependencias2.php';//parte del codigo html principal
                  }
             }); 
              }
+        }
           });
+       
+
 
 
           $(document).on('click','a[data-role=updateAlumno]',function(){
