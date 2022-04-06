@@ -19,16 +19,15 @@ $servi = $servi->get_receptor();
 <p class="lead" style="margin-top: 0px" >Solicitudes de Cotización</p> <hr class="my-1" >
 <div  align="left" style="margin-bottom: 5px; margin-top: 0px;">
   </div>
- 
+
+
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
-
       <div class="modal-header">
           <h4 class="modal-title">Costo de la Cotización</h4>
         </div>
-
         <div class="modal-body">
         <div class="col-sm">
                 <div class="form-group">
@@ -37,20 +36,15 @@ $servi = $servi->get_receptor();
                   <input type="hidden" name="ID" id="ID" >
 
                   <label>Cliente</label>
-                  <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Datos del cliente..." maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"
-  >
+            <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Datos del cliente..." maxlength="30"   >
               </div>
             </div>
-
-  
             <div class="col-sm">
                 <div class="form-group">
                   <label>Servicio</label>
                   <textarea class="form-control" id="servicio" name="servicio"  placeholder="Describir el servicio..." rows="3"></textarea>
               </div>
             </div>
-
-
          <div class="col-sm">
                 <div class="form-group">
                 <label>Costo del Servicio</label>
@@ -58,22 +52,57 @@ $servi = $servi->get_receptor();
               </div>
             </div>
 
-
-
-
             </div>
-
         <div class="modal-footer">
         <span  class="btn btn-info" data-toggle="collapse" href="#collapseExample" id="saveAlumno">Guardar</span>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>
       </form>
-
     </div>
   </div>
 
 
+
+
+  <div class="modal fade" id="myModalemail" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">Enviar email de la cotización</h4>
+        </div>
+        <div class="modal-body">
+        <div class="col-sm">
+                <div class="form-group">
+                <form id="formMail" action="mail.php" method="post" >
+                  <input type="hidden" name="IDe" id="IDe" >
+
+                  <label>Correo del Cliente</label>
+            <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo del cliente..." required  >
+              </div>
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                  <label>Asunto</label>
+                  <textarea class="form-control" id="asunto" name="asunto"  placeholder="Describir el servicio..." rows="3"></textarea>
+              </div>
+            </div>
+
+
+            </div>
+        <div class="modal-footer">
+        <INPUT type="submit" value="Enviar Cotización">
+        <!-- <span  class="btn btn-info" data-toggle="collapse" href="#collapseExample" id="saveAlumno">Enviar Cotización</span> -->
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+
+  
 
             <?php
             $table = new tablacuerpo();
@@ -132,6 +161,13 @@ $servi = $servi->get_receptor();
                 $('#opc').val(opc);
 
           });
+
+
+
+          $(document).on('click','a[data-role=emailpdf]',function(){
+            var id  = $(this).data('id');
+            $('#IDe').val(id);
+            });
 
 
           $(document).on('click','a[data-role=xAlumno]',function(){

@@ -1,4 +1,13 @@
 <?php
+error_reporting(0);
+
+$correo = $_POST["correo"];
+$asunto = $_POST["asunto"];
+
+
+
+
+
 require_once '../db/db.php';
 require_once('../pdf/fpdf.php');
 include_once "../models/cotizar_model.php";
@@ -124,7 +133,7 @@ function Header()
 //$this->Image('../../statics/logo.jpg',7,4,40,25);
 //$this->Image('img/logo' ,240,5,25,20);
 
-$id = (isset($_GET['num'])) ? $_GET['num'] : '';
+$id = (isset($_POST['IDe'])) ? $_POST['IDe'] : '';
 
 $tipo=new Cotizar_model();
 $tipo = $tipo->get_cotizarid($id);
@@ -186,7 +195,7 @@ $this->Cell(0,6,utf8_decode($telefono),0,1,'L');
 function Footer()
 {
 
-    $id = (isset($_GET['num'])) ? $_GET['num'] : '';
+    $id = (isset($_POST['IDe'])) ? $_POST['IDe'] : '';
 
 $tipo=new Cotizar_model();
 $tipo = $tipo->get_cotizarid($id);
@@ -227,7 +236,7 @@ foreach($tipo as $coti){
     $pdf->AddPage();
     $pdf->SetMargins(10,10,10);
 
-    $id = (isset($_GET['num'])) ? $_GET['num'] : '';
+    $id = (isset($_POST['IDe'])) ? $_POST['IDe'] : '';
 
 
     $alumn=$conexion->query("SELECT * from cotizar where id = '$id'");
@@ -259,5 +268,71 @@ foreach($tipo as $coti){
         }
 
 $pdf->Output("C:xampp77/htdocs/facturacion/cotizacion.pdf","F");
-$pdf->Output();
+
+
+
+
+
+
+
+
+
+
+//Recipiente
+$to = $correo;
+
+//remitente del correo
+$from = 'ffreddy.mx@gmail.com';
+$fromName = 'INOFIS';
+
+//Asunto del email
+$subject = 'Se envia adjunto en formato PDF su cotización'; 
+
+//Ruta del archivo adjunto
+$file = "C:/xampp77/htdocs/facturacion/cotizacion.pdf";
+
+//Contenido del Email
+$htmlContent = $asunto.'<h1>Cotización de la empresa INOFIS</h1>
+    <p>Este correo electrónico ha enviado desde script PHP.</p>';
+
+//Encabezado para información del remitente
+$headers = "De: $fromName"." <".$from.">";
+
+//Limite Email
+$semi_rand = md5(time()); 
+$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x"; 
+
+//Encabezados para archivo adjunto 
+$headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\""; 
+
+//límite multiparte
+$message = "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"UTF-8\"\n" .
+"Content-Transfer-Encoding: 7bit\n\n" . $htmlContent . "\n\n"; 
+
+//preparación de archivo
+if(!empty($file) > 0){
+    if(is_file($file)){
+        $message .= "--{$mime_boundary}\n";
+        $fp =    @fopen($file,"rb");
+        $data =  @fread($fp,filesize($file));
+
+        @fclose($fp);
+        $data = chunk_split(base64_encode($data));
+        $message .= "Content-Type: application/octet-stream; name=\"".basename($file)."\"\n" . 
+        "Content-Description: ".basename($files[$i])."\n" .
+        "Content-Disposition: attachment;\n" . " filename=\"".basename($file)."\"; size=".filesize($file).";\n" . 
+        "Content-Transfer-Encoding: base64\n\n" . $data . "\n\n";
+    }
+}
+$message .= "--{$mime_boundary}--";
+$returnpath = "-f" . $from;
+
+//Enviar EMail
+$mail = @mail($to, $subject, $message, $headers, $returnpath); 
+
+//Estado de envío de correo electrónico
+echo $mail?"<h1>Correo enviado.</h1>":"<h1>El envío de correo falló.</h1>";
+
+header("refresh:2;url=cotizar.php");
+
 ?>
